@@ -12,6 +12,7 @@ Steam, Epic, EA, Xbox, HoYoPlay, Battle.net et bien d'autres, détectés tout se
 ![Rust](https://img.shields.io/badge/Rust-backend-000000?logo=rust&logoColor=white)
 ![React 19](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6?logo=typescript&logoColor=white)
+[![Licence MIT](https://img.shields.io/badge/licence-MIT-green)](LICENSE)
 
 </div>
 
@@ -34,6 +35,7 @@ L'application est écrite en Rust (Tauri 2) avec une interface React affichée p
 - [Architecture](#architecture)
 - [Limites connues](#limites-connues)
 - [Feuille de route](#feuille-de-route)
+- [Licence](#licence)
 
 ---
 
@@ -250,6 +252,12 @@ design/               Maquettes des trois directions visuelles explorées
 - [ ] Temps de jeu suivi pour tous les launchers
 - [ ] Liste de souhaits et alertes de baisse de prix
 - [ ] Prix Epic, EA et Ubisoft via IsThereAnyDeal
+
+---
+
+## Licence
+
+Launcher Pro est distribué sous [licence MIT](LICENSE) : vous pouvez l'utiliser, le modifier et le redistribuer librement, à condition de conserver la mention de copyright et le texte de la licence.
 
 ---
 
