@@ -29,7 +29,7 @@ L'application est écrite en Rust (Tauri 2) avec une interface React affichée p
 
 ## Installation
 
-1. Téléchargez **`Launcher Pro_x.y.z_x64-setup.exe`** (environ 3 Mo) depuis la [dernière release](https://github.com/Corentin-vidonne/launcher-pro/releases/latest).
+1. Téléchargez **`Launcher.Pro_x.y.z_x64-setup.exe`** (environ 3 Mo) depuis la [dernière release](https://github.com/Corentin-vidonne/launcher-pro/releases/latest).
 2. Lancez-le : l'installation se fait pour votre compte Windows, sans droits administrateur.
 3. L'installeur n'est pas signé numériquement : si Windows SmartScreen affiche « Windows a protégé votre ordinateur », cliquez sur **Informations complémentaires**, puis **Exécuter quand même**.
 

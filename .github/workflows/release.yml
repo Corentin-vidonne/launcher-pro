@@ -76,7 +76,7 @@ jobs:
           releaseBody: |
             ## Installation
 
-            1. Téléchargez **Launcher Pro_${{ steps.version.outputs.version }}_x64-setup.exe** dans les fichiers ci-dessous.
+            1. Téléchargez **Launcher.Pro_${{ steps.version.outputs.version }}_x64-setup.exe** dans les fichiers ci-dessous.
             2. Lancez-le : l'installation se fait pour votre compte Windows, sans droits administrateur.
             3. L'installeur n'est pas signé numériquement : si Windows SmartScreen affiche « Windows a protégé votre ordinateur », cliquez sur **Informations complémentaires** puis **Exécuter quand même**.
 
