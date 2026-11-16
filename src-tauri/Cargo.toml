@@ -1,0 +1,52 @@
+[package]
+name = "launcher-pro"
+version = "0.1.0"
+description = "Launcher de jeux unifié pour Windows"
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "launcher_pro_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+tauri-plugin-global-shortcut = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["fs", "sync", "time", "macros", "rt"] }
+# native-tls => Schannel sur Windows : pas d'OpenSSL ni de ring à compiler, binaire plus petit.
+reqwest = { version = "0.12", default-features = false, features = ["native-tls", "json", "gzip"] }
+winreg = "0.55"
+png = "0.17"
+base64 = "0.22"
+percent-encoding = "2"
+# Empreinte du mot de passe du coffre des jeux masqués.
+argon2 = "0.5"
+# Sel aléatoire tiré du générateur cryptographique de Windows (OsRng).
+rand_core = { version = "0.6", features = ["getrandom"] }
+# Même version que celle de Tauri : accès au réglage mémoire de WebView2.
+webview2-com = "0.39"
+
+# Même version que Tauri/WebView2 : une seule copie de la bibliothèque dans le binaire.
+[dependencies.windows]
+version = "0.62"
+features = [
+  "Win32_Foundation",
+  "Win32_UI_Shell",
+  "Win32_UI_WindowsAndMessaging",
+  "Win32_Graphics_Gdi",
+  "Win32_System_Com",
+  "Win32_Storage_FileSystem",
+  "Win32_Graphics_Dwm",
+]
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

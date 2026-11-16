@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Launcher Pro — directions visuelles</title>
+<style>
+:root{--font:"Inter Variable","Inter","Segoe UI Variable Display","Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:#08080c;color:#fff;font:14px/1.4 var(--font);-webkit-font-smoothing:antialiased;overflow-x:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+
+/* ───── barre de choix ───── */
+.bar{display:flex;align-items:center;gap:14px;padding:14px 20px;min-width:980px}
+.bar .tabs{display:flex;gap:4px;padding:4px;border-radius:12px;background:rgba(255,255,255,.08)}
+.bar .tabs button{height:32px;padding:0 14px;border-radius:9px;color:rgba(255,255,255,.7);font-weight:550}
+.bar .tabs button.on{background:rgba(255,255,255,.16);color:#fff}
+.bar .mode{margin-left:auto;display:flex;gap:4px;padding:4px;border-radius:12px;background:rgba(255,255,255,.08)}
+.bar .mode button{height:32px;padding:0 14px;border-radius:9px;color:rgba(255,255,255,.7);font-weight:550}
+.bar .mode button.on{background:rgba(255,255,255,.16);color:#fff}
+.bar p{margin:0;color:rgba(255,255,255,.62);max-width:560px;font-size:13px}
+
+/* ───── fenêtre ───── */
+.win{--txt:#fff;--txt2:rgba(255,255,255,.74);--txt3:rgba(255,255,255,.5);
+  --tint:rgba(255,255,255,.1);--tint2:rgba(255,255,255,.2);--edge:rgba(255,255,255,.34);--edge2:rgba(255,255,255,.07);
+  --shadow:rgba(0,0,0,.38);--scrim1:rgba(8,8,14,.18);--scrim2:rgba(8,8,14,.66);
+  position:relative;margin:0 20px 20px;height:calc(100vh - 78px);min-height:640px;min-width:980px;border-radius:26px;
+  overflow:hidden;color:var(--txt);isolation:isolate;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.1)}
+.win.light{--txt:#12121a;--txt2:rgba(18,18,26,.68);--txt3:rgba(18,18,26,.45);
+  --tint:rgba(255,255,255,.4);--tint2:rgba(255,255,255,.66);--edge:rgba(255,255,255,.95);--edge2:rgba(255,255,255,.4);
+  --shadow:rgba(40,40,80,.24);--scrim1:rgba(255,255,255,.12);--scrim2:rgba(244,244,252,.62)}
+
+.bgimg{position:absolute;inset:-30px;background-size:cover;background-position:center 18%;filter:saturate(1.35);z-index:-2;animation:fade .7s ease-out}
+.scrim{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,var(--scrim1),var(--scrim2))}
+@keyframes fade{from{opacity:0}}
+
+/* Le verre : teinte + flou + saturation + reflet spéculaire en haut et sur les arêtes */
+.glass{position:relative;background:linear-gradient(135deg,var(--tint2),var(--tint) 42%,var(--tint));
+  -webkit-backdrop-filter:blur(22px) saturate(1.8) brightness(1.06);backdrop-filter:blur(22px) saturate(1.8) brightness(1.06);
+  box-shadow:inset 0 1.5px 0 var(--edge),inset 0 -1px 0 var(--edge2),inset 1px 0 0 var(--edge2),inset -1px 0 0 var(--edge2),0 18px 50px var(--shadow)}
+
+svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.logo{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#3aa0ff,#5e5ce6 55%,#c05af2);flex:none;position:relative}
+.logo::after{content:"";position:absolute;left:9px;top:7px;border-left:9px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent}
+.pill{border-radius:999px;display:flex;align-items:center;gap:8px}
+.play{display:flex;align-items:center;gap:9px;height:48px;padding:0 28px 0 22px;border-radius:999px;background:#fff;color:#000;font-weight:650;font-size:15px;
+  box-shadow:0 10px 28px rgba(0,0,0,.38),inset 0 -2px 0 rgba(0,0,0,.08);transition:transform .3s cubic-bezier(.32,.72,0,1)}
+.play:hover{transform:scale(1.05)}
+.play svg{fill:#000;stroke:none;width:16px;height:16px}
+.ghost{height:48px;padding:0 22px;border-radius:999px;display:flex;align-items:center;gap:8px;font-weight:600}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--txt2);margin-bottom:10px}
+.meta{margin:10px 0 0;color:var(--txt2);font-size:13.5px}
+.acts{display:flex;gap:10px;margin-top:20px;align-items:center}
+.hero-logo{max-width:100%;max-height:112px;object-fit:contain;object-position:left bottom;filter:drop-shadow(0 4px 22px rgba(0,0,0,.55));display:block}
+h1.t{margin:0;font-size:46px;line-height:1.04;font-weight:780;letter-spacing:-.035em}
+.row{display:flex;gap:16px;overflow-x:auto;padding:6px 3px 12px;scrollbar-width:none}
+.card{flex:none;position:relative;border-radius:20px;overflow:hidden;background-size:cover;background-position:center;cursor:pointer;
+  box-shadow:0 12px 28px rgba(0,0,0,.42),0 0 0 1px rgba(255,255,255,.2);transition:transform .5s cubic-bezier(.32,.72,0,1),box-shadow .3s}
+.card:hover{transform:translateY(-7px) scale(1.04)}
+.card.sel{box-shadow:0 0 0 2.5px #fff,0 16px 36px rgba(0,0,0,.5)}
+.card em{position:absolute;left:8px;right:8px;bottom:8px;padding:6px 11px;border-radius:999px;font-style:normal;font-size:11.5px;font-weight:620;color:#fff;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 6px rgba(0,0,0,.5);
+  background:rgba(255,255,255,.17);-webkit-backdrop-filter:blur(14px) saturate(1.8);backdrop-filter:blur(14px) saturate(1.8);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+.sdot{width:20px;height:20px;border-radius:6px;display:grid;place-items:center;font-size:10px;font-weight:760;color:#fff;font-style:normal;flex:none}
+
+/* ═════ Style 1 — Liquid Glass flottant ═════ */
+.s1-side{position:absolute;left:14px;top:14px;bottom:14px;width:236px;padding:16px 12px;display:flex;flex-direction:column;border-radius:30px}
+.s1-side .brand{display:flex;gap:10px;align-items:center;font-weight:680;padding:4px 8px 16px}
+.s1-side nav{display:flex;flex-direction:column;gap:2px}
+.s1-side nav a{display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:13px;font-weight:560}
+.s1-side nav a.on{background:var(--tint2);box-shadow:inset 0 1px 0 var(--edge),0 3px 12px var(--shadow)}
+.s1-side nav a b{margin-left:auto;font-weight:500;color:var(--txt3);font-size:12px}
+.s1-side h6{margin:16px 10px 6px;font-size:11px;color:var(--txt3);font-weight:680;letter-spacing:.02em}
+.s1-side .foot{margin-top:auto}
+.s1-top{position:absolute;top:14px;left:266px;right:14px;display:flex;gap:10px;justify-content:flex-end}
+.s1-top .pill{height:44px;padding:0 18px}
+.s1-top .search{width:300px;color:var(--txt2)}
+.s1-top .seg{padding:5px;gap:2px}
+.s1-top .seg b{padding:0 15px;height:34px;line-height:34px;border-radius:999px;font-weight:560;font-size:13px;color:var(--txt2)}
+.s1-top .seg b.on{background:var(--tint2);color:var(--txt);box-shadow:inset 0 1px 0 var(--edge),0 2px 8px var(--shadow)}
+.s1-hero{position:absolute;left:292px;top:112px;width:520px}
+.s1-tray{position:absolute;left:264px;right:14px;bottom:14px;height:300px;padding:18px 22px;border-radius:30px}
+.s1-tray h3{margin:0 0 10px;font-size:17px;font-weight:720;letter-spacing:-.02em}
+.s1-tray h3 span{font-weight:500;color:var(--txt2);font-size:13px;margin-left:6px}
+.s1-tray .card{width:134px;aspect-ratio:2/3}
+
+/* ═════ Style 2 — Immersif + dock ═════ */
+.s2 .scrim{background:linear-gradient(90deg,rgba(6,6,10,.72) 0%,rgba(6,6,10,.25) 52%,rgba(6,6,10,0) 80%),linear-gradient(0deg,rgba(6,6,10,.85) 0%,rgba(6,6,10,0) 56%)}
+.s2.light .scrim{background:linear-gradient(90deg,rgba(248,248,255,.8) 0%,rgba(248,248,255,.3) 52%,rgba(248,248,255,0) 80%),linear-gradient(0deg,rgba(248,248,255,.9) 0%,rgba(248,248,255,0) 56%)}
+.s2-top{position:absolute;top:20px;left:28px;right:28px;display:flex;align-items:center;justify-content:space-between}
+.s2-top .tabs{display:flex;padding:5px;gap:2px;border-radius:999px}
+.s2-top .tabs a{height:36px;padding:0 20px;line-height:36px;border-radius:999px;font-weight:580;color:var(--txt2)}
+.s2-top .tabs a.on{background:var(--tint2);color:var(--txt);box-shadow:inset 0 1px 0 var(--edge),0 2px 10px var(--shadow)}
+.s2-top .rt{display:flex;gap:10px}
+.s2-top .sq{width:44px;height:44px;justify-content:center;border-radius:50%}
+.s2-top .me{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ff9f0a,#ff375f);display:grid;place-items:center;font-weight:700;color:#fff}
+.s2-hero{position:absolute;left:56px;bottom:372px;width:560px}
+.s2-hero h1.t{font-size:62px}
+.s2-hero .hero-logo{max-height:150px}
+.s2-rail{position:absolute;left:44px;right:44px;bottom:122px}
+.s2-rail .row{padding:14px 14px 12px}
+.s2-rail .card{width:126px;aspect-ratio:2/3;border-radius:18px}
+.s2-rail .card.sel{transform:translateY(-10px) scale(1.08)}
+.s2-rail .cap{font-size:11.5px;color:var(--txt2);margin:7px 0 0 4px;width:126px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:none}
+.s2-rail .col{flex:none}
+.s2-dock{position:absolute;left:50%;transform:translateX(-50%);bottom:22px;height:80px;padding:0 16px;display:flex;align-items:center;gap:10px;border-radius:30px}
+.s2-dock a{width:50px;height:50px;border-radius:15px;display:grid;place-items:center;font-weight:760;font-size:19px;color:#fff;
+  box-shadow:0 8px 18px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.4);transition:transform .35s cubic-bezier(.32,.72,0,1)}
+.s2-dock a:hover{transform:translateY(-12px) scale(1.28)}
+.s2-dock a:hover+a,.s2-dock a:has(+a:hover){transform:translateY(-5px) scale(1.12)}
+.s2-dock hr{width:1px;height:38px;border:0;background:var(--edge2);margin:0 4px}
+.s2-dock .add{background:var(--tint2);color:var(--txt);box-shadow:inset 0 1px 0 var(--edge)}
+
+/* ═════ Style 3 — Bento aurore ═════ */
+.s3{background:#090912}
+.s3.light{background:#eceefa}
+.s3 .mesh{position:absolute;inset:-20%;z-index:-2;filter:blur(30px);animation:drift 22s ease-in-out infinite alternate;
+  background:radial-gradient(40% 36% at 14% 8%,rgba(94,92,230,.75),transparent 70%),radial-gradient(34% 30% at 88% 12%,rgba(255,55,95,.5),transparent 70%),
+  radial-gradient(44% 40% at 62% 98%,rgba(10,132,255,.6),transparent 70%),radial-gradient(30% 30% at 4% 92%,rgba(48,209,88,.32),transparent 70%)}
+.s3.light .mesh{opacity:.75}
+@keyframes drift{to{transform:translate(3%,2%) scale(1.06)}}
+.s3-rail{position:absolute;left:18px;top:18px;bottom:18px;width:62px;border-radius:31px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 0}
+.s3-rail a{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:var(--txt2)}
+.s3-rail a.on{background:var(--tint2);color:var(--txt);box-shadow:inset 0 1px 0 var(--edge),0 3px 10px var(--shadow)}
+.s3-rail .logo{margin-bottom:10px;width:30px;height:30px;border-radius:9px}
+.s3-rail .logo::after{left:11px;top:9px}
+.s3-rail .end{margin-top:auto}
+.bento{position:absolute;left:98px;right:18px;top:18px;bottom:18px;display:grid;gap:14px;grid-template-columns:repeat(12,1fr);grid-template-rows:1.25fr 1fr .78fr}
+.bento>.glass{border-radius:30px;padding:20px 22px;overflow:hidden}
+.bento h4{margin:0 0 12px;font-size:15px;font-weight:700;letter-spacing:-.015em;display:flex;align-items:center;justify-content:space-between}
+.bento h4 span{font-weight:500;color:var(--txt2);font-size:12.5px}
+.b-hero{grid-column:1/8;grid-row:1/3;padding:0!important;background-size:cover;background-position:center 20%;color:#fff}
+.b-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,6,12,.82),rgba(6,6,12,0) 62%)}
+.b-hero .chip{position:absolute;left:18px;top:18px;height:32px;padding:0 14px;border-radius:999px;font-size:12px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;color:#fff}
+.b-hero .inner{position:absolute;left:18px;right:18px;bottom:18px;padding:20px 22px;border-radius:26px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;color:#fff}
+.b-hero .inner h2{margin:0;font-size:30px;font-weight:780;letter-spacing:-.03em;line-height:1.05}
+.b-hero .inner p{margin:6px 0 0;color:rgba(255,255,255,.78)}
+.b-stats{grid-column:8/13;grid-row:1}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat b{display:block;font-size:34px;font-weight:760;letter-spacing:-.04em;line-height:1}
+.stat span{font-size:12px;color:var(--txt2)}
+.bars{display:flex;align-items:flex-end;gap:9px;height:96px;margin-top:20px}
+.bars i{flex:1;border-radius:9px;background:linear-gradient(180deg,#64d2ff,#5e5ce6);opacity:.95;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.bars-l{display:flex;gap:9px;margin-top:6px;color:var(--txt3);font-size:11px}
+.bars-l span{flex:1;text-align:center}
+.b-promo{grid-column:8/13;grid-row:2}
+.deal{display:flex;align-items:center;gap:12px;padding:7px;border-radius:16px;margin:0 -7px}
+.deal:hover{background:var(--tint)}
+.deal img{width:104px;aspect-ratio:460/215;object-fit:cover;border-radius:10px;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.2)}
+.deal div{flex:1;min-width:0}
+.deal b{display:block;font-weight:640;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.deal small{color:var(--txt3);text-decoration:line-through}
+.deal strong{font-size:15px;letter-spacing:-.01em}
+.off{height:22px;padding:0 8px;border-radius:999px;background:#30d158;color:#03170a;font-weight:760;font-size:12px;display:flex;align-items:center}
+.b-recent{grid-column:1/13;grid-row:3;display:flex;flex-direction:column}
+.b-recent .row{flex:1;align-items:stretch;padding:0 0 4px;gap:14px}
+.b-recent .card{width:auto;flex:1;aspect-ratio:auto;border-radius:16px;min-width:150px}
+.b-recent .card.sel{box-shadow:0 0 0 2.5px #fff,0 12px 26px rgba(0,0,0,.4)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="defs"></defs></svg>
+<div class="bar">
+  <div class="tabs" id="styles"></div>
+  <p id="desc"></p>
+  <div class="mode" id="modes"><button data-m="dark">Sombre</button><button data-m="light">Clair</button></div>
+</div>
+<div class="win" id="win"></div>
+
+<script>
+const CDN = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/";
+const hero  = g => `${CDN}${g.id}/library_hero.jpg`;
+const cover = g => `${CDN}${g.id}/library_600x900.jpg`;
+const head  = g => `${CDN}${g.id}/header.jpg`;
+const logo  = g => `${CDN}${g.id}/logo.png`;
+
+const G = [
+  {id:1245620,n:"ELDEN RING",t:"299 h",last:"il y a 1 heure",s:"Steam"},
+  {id:1091500,n:"Cyberpunk 2077",t:"85 h",last:"il y a 14 jours",s:"Steam"},
+  {id:2050650,n:"Resident Evil 4",t:"31 h",last:"il y a 2 jours",s:"Steam"},
+  {id:1172470,n:"Apex Legends",t:"412 h",last:"hier",s:"Steam"},
+  {id:2561580,n:"Horizon Zero Dawn Remastered",t:"46 h",last:"il y a 3 semaines",s:"Steam"},
+  {id:805550,n:"Assetto Corsa Competizione",t:"18 h",last:"il y a 8 mois",s:"Steam"},
+  {id:678950,n:"DRAGON BALL FighterZ",t:"22 h",last:"il y a 5 semaines",s:"Steam"},
+  {id:448510,n:"Overcooked",t:"7 h",last:"il y a 4 mois",s:"Steam"},
+];
+const SRC = [
+  {n:"Steam",c:"#2a475e",k:17},{n:"Epic Games",c:"#2b2b30",k:2},{n:"EA app",c:"#3b5bff",k:2},{n:"Xbox",c:"#107c10",k:4},
+  {n:"Battle.net",c:"#0a8fd8",k:0},{n:"Rockstar",c:"#e0a010",k:0},{n:"HoYoPlay",c:"#4aa8ff",k:3},{n:"Wargaming",c:"#d6392f",k:1},
+  {n:"Kuro Games",c:"#6b6b78",k:1},{n:"Ankama",c:"#f58220",k:1},
+];
+const DEALS = [
+  {g:G[1],now:"19,99 €",was:"59,99 €",off:60},{g:G[0],now:"22,99 €",was:"59,99 €",off:55},{g:G[2],now:"25,99 €",was:"59,99 €",off:50},
+];
+const I = p => `<svg class="i" viewBox="0 0 24 24">${p}</svg>`;
+const ic = {
+  grid:I('<rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/>'),
+  heart:I('<path d="M12 20.3s-7.5-4.4-7.5-10A4.4 4.4 0 0 1 12 7.6a4.4 4.4 0 0 1 7.5 2.7c0 5.6-7.5 10-7.5 10Z"/>'),
+  clock:I('<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'),
+  bag:I('<path d="M5 8h14l-1 11.2a2 2 0 0 1-2 1.8H8a2 2 0 0 1-2-1.8L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>'),
+  gear:I('<circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><path d="M12 2.8v2.4M12 18.8v2.4M4 7.4l2.100 1.200M17.900 15.400 20 16.600M4 16.600l2.100-1.200M17.900 8.600 20 7.400"/>'),
+  search:I('<circle cx="10.800" cy="10.800" r="6.300"/><path d="m15.600 15.600 4.400 4.400"/>'),
+  play:`<svg class="i" viewBox="0 0 24 24"><path d="M8 5.200v13.600a1 1 0 0 0 1.500.86l11.300-6.800a1 1 0 0 0 0-1.720L9.500 4.340A1 1 0 0 0 8 5.200Z"/></svg>`,
+  plus:I('<path d="M12 5.500v13M5.500 12h13"/>'),
+  more:I('<circle cx="6" cy="12" r="1.300" fill="currentColor"/><circle cx="12" cy="12" r="1.300" fill="currentColor"/><circle cx="18" cy="12" r="1.300" fill="currentColor"/>'),
+};
+
+const STYLES = {
+  s1:{name:"1 · Liquid Glass", desc:"Panneaux de verre flottants qui réfractent l'artwork du jeu sélectionné : le fond de toute l'interface change avec le jeu."},
+  s2:{name:"2 · Immersif + Dock", desc:"Plein écran façon tvOS : l'écran entier est l'artwork, navigation en capsule de verre en haut, dock des launchers en bas."},
+  s3:{name:"3 · Bento aurore", desc:"Tableau de bord en cartes de verre sur fond aurore animé : reprendre, statistiques de jeu, promotions et récents d'un coup d'œil."},
+};
+let style = "s1", mode = "dark", cur = G[0];
+
+const card = (g, w) => `<div class="card ${g.id===cur.id?'sel':''}" data-id="${g.id}" style="background-image:url(${cover(g)})"><em>${g.n}</em></div>`;
+const heroTitle = () => mode==="dark" ? `<img class="hero-logo" src="${logo(cur)}" alt="${cur.n}" data-fallback="${cur.n}">` : `<h1 class="t">${cur.n}</h1>`;
+
+const T = {
+s1:()=>`
+<div class="bgimg" style="background-image:url(${hero(cur)})"></div><div class="scrim"></div>
+<aside class="glass s1-side" data-lens data-r="30" data-bezel="24">
+  <div class="brand"><i class="logo"></i>Launcher Pro</div>
+  <nav><a class="on">${ic.grid}Tous les jeux<b>27</b></a><a>${ic.heart}Favoris</a><a>${ic.clock}Récents</a><a>${ic.bag}Magasin</a></nav>
+  <h6>Sources</h6>
+  <nav>${SRC.map(s=>`<a><i class="sdot" style="background:${s.c}">${s.n[0]}</i>${s.n}${s.k?`<b>${s.k}</b>`:''}</a>`).join('')}</nav>
+  <nav class="foot"><a>${ic.gear}Réglages</a></nav>
+</aside>
+<header class="s1-top">
+  <div class="glass pill search" data-lens data-r="22" data-bezel="16">${ic.search}Rechercher</div>
+  <div class="glass pill seg" data-lens data-r="22" data-bezel="16"><b class="on">Nom</b><b>Récents</b><b>Temps de jeu</b></div>
+</header>
+<section class="s1-hero">
+  <div class="eyebrow">Reprendre</div>${heroTitle()}
+  <p class="meta">${cur.s} · joué ${cur.last} · ${cur.t} de jeu</p>
+  <div class="acts"><button class="play">${ic.play}Jouer</button><button class="glass ghost" data-lens data-r="24" data-bezel="16">Détails</button></div>
+</section>
+<section class="glass s1-tray" data-lens data-r="30" data-bezel="24">
+  <h3>Bibliothèque<span>27 jeux</span></h3><div class="row">${G.map(card).join('')}</div>
+</section>`,
+
+s2:()=>`
+<div class="bgimg" style="background-image:url(${hero(cur)})"></div><div class="scrim"></div>
+<header class="s2-top">
+  <div class="glass pill sq" data-lens data-r="22" data-bezel="14"><i class="logo"></i></div>
+  <nav class="glass tabs" data-lens data-r="26" data-bezel="16"><a>Accueil</a><a class="on">Bibliothèque</a><a>Magasin</a><a>Réglages</a></nav>
+  <div class="rt"><div class="glass pill sq" data-lens data-r="22" data-bezel="14">${ic.search}</div><div class="me">C</div></div>
+</header>
+<section class="s2-hero">
+  <div class="eyebrow">Dernière session · ${cur.last}</div>${heroTitle()}
+  <p class="meta">${cur.s} · ${cur.t} de jeu</p>
+  <div class="acts"><button class="play">${ic.play}Jouer</button>
+  <button class="glass pill ghost" style="width:48px;padding:0;justify-content:center" data-lens data-r="24" data-bezel="16">${ic.heart}</button>
+  <button class="glass pill ghost" style="width:48px;padding:0;justify-content:center" data-lens data-r="24" data-bezel="16">${ic.more}</button></div>
+</section>
+<section class="s2-rail"><div class="row">${G.map(g=>`<div class="col">${card(g)}<div class="cap">${g.n}</div></div>`).join('')}</div></section>
+<nav class="glass s2-dock" data-lens data-r="30" data-bezel="20">
+  ${SRC.slice(0,8).map(s=>`<a style="background:${s.c}" title="${s.n}">${s.n[0]}</a>`).join('')}<hr><a class="add">${ic.plus}</a>
+</nav>`,
+
+s3:()=>`
+<div class="mesh"></div>
+<nav class="glass s3-rail" data-lens data-r="31" data-bezel="18">
+  <i class="logo"></i><a class="on">${ic.grid}</a><a>${ic.heart}</a><a>${ic.clock}</a><a>${ic.bag}</a><a class="end">${ic.gear}</a>
+</nav>
+<div class="bento">
+  <section class="glass b-hero" style="background-image:url(${hero(cur)})" data-lens data-r="30" data-bezel="22">
+    <div class="glass chip">Reprendre</div>
+    <div class="glass inner" data-lens data-r="26" data-bezel="16">
+      <div><h2>${cur.n}</h2><p>${cur.s} · joué ${cur.last} · ${cur.t}</p></div>
+      <button class="play" style="flex:none">${ic.play}Jouer</button>
+    </div>
+  </section>
+  <section class="glass b-stats" data-lens data-r="30" data-bezel="20">
+    <h4>Cette semaine<span>en heures</span></h4>
+    <div class="stats"><div class="stat"><b>27</b><span>jeux</span></div><div class="stat"><b>11</b><span>launchers</span></div><div class="stat"><b>14 h</b><span>de jeu</span></div></div>
+    <div class="bars">${[38,64,22,80,52,96,70].map(h=>`<i style="height:${h}%"></i>`).join('')}</div>
+    <div class="bars-l">${['L','M','M','J','V','S','D'].map(d=>`<span>${d}</span>`).join('')}</div>
+  </section>
+  <section class="glass b-promo" data-lens data-r="30" data-bezel="20">
+    <h4>Promotions<span>Steam · Instant Gaming</span></h4>
+    ${DEALS.map(d=>`<div class="deal"><img src="${head(d.g)}" alt=""><div><b>${d.g.n}</b><small>${d.was}</small> <strong>${d.now}</strong></div><span class="off">−${d.off} %</span></div>`).join('')}
+  </section>
+  <section class="glass b-recent" data-lens data-r="30" data-bezel="20">
+    <h4>Récemment joués<span>${G.length} jeux</span></h4>
+    <div class="row">${G.slice(0,5).map(g=>`<div class="card ${g.id===cur.id?'sel':''}" data-id="${g.id}" style="background-image:url(${head(g)})"><em>${g.n}</em></div>`).join('')}</div>
+  </section>
+</div>`,
+};
+
+/* ───── réfraction « lentille » : carte de déplacement calculée par élément ───── */
+const defs = document.getElementById("defs");
+function lens(el, {r=28, bezel=22, scale=70, blur=7, sat=1.8, bri=1.07}={}){
+  const w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
+  if(!w || !h) return;
+  const c = document.createElement("canvas"); c.width = w; c.height = h;
+  const ctx = c.getContext("2d"), img = ctx.createImageData(w,h), d = img.data;
+  const hw = w/2, hh = h/2, rr = Math.min(r, hw, hh);
+  for(let j=0;j<h;j++) for(let i=0;i<w;i++){
+    const px = i+.5-hw, py = j+.5-hh, sx = Math.sign(px)||1, sy = Math.sign(py)||1;
+    const qx = Math.abs(px)-(hw-rr), qy = Math.abs(py)-(hh-rr);
+    let dist, nx=0, ny=0;
+    if(qx>0 && qy>0){ const l=Math.hypot(qx,qy); dist=rr-l; nx=qx/l*sx; ny=qy/l*sy; }
+    else if(qx>qy){ dist=rr-qx; nx=sx; } else { dist=rr-qy; ny=sy; }
+    const k = (j*w+i)*4; let m = 0;
+    if(dist>=0 && dist<bezel){ const t = 1-dist/bezel; m = t*t*(3-2*t); }   // courbe douce, max au bord
+    d[k]   = 128 - nx*m*127;   // on prélève vers l'intérieur : le bord « plonge » sur le fond
+    d[k+1] = 128 - ny*m*127;
+    d[k+2] = 128; d[k+3] = 255;
+  }
+  ctx.putImageData(img,0,0);
+  const id = "lens"+(lens.n=(lens.n||0)+1);
+  defs.insertAdjacentHTML("beforeend",
+    `<filter id="${id}" filterUnits="userSpaceOnUse" x="0" y="0" width="${w}" height="${h}" color-interpolation-filters="sRGB">
+       <feImage href="${c.toDataURL()}" x="0" y="0" width="${w}" height="${h}" result="m"/>
+       <feDisplacementMap in="SourceGraphic" in2="m" scale="${scale}" xChannelSelector="R" yChannelSelector="G"/></filter>`);
+  const v = `url(#${id}) blur(${blur}px) saturate(${sat}) brightness(${bri})`;
+  el.style.backdropFilter = v; el.style.webkitBackdropFilter = v;
+}
+function applyLens(){
+  defs.innerHTML = "";
+  document.querySelectorAll("[data-lens]").forEach(el=>lens(el,{r:+el.dataset.r||28, bezel:+el.dataset.bezel||22}));
+}
+
+/* ───── rendu ───── */
+const win = document.getElementById("win");
+function render(){
+  win.className = `win ${style} ${mode}`;
+  win.innerHTML = T[style]();
+  document.getElementById("desc").textContent = STYLES[style].desc;
+  document.querySelectorAll("#styles button").forEach(b=>b.classList.toggle("on", b.dataset.s===style));
+  document.querySelectorAll("#modes button").forEach(b=>b.classList.toggle("on", b.dataset.m===mode));
+  win.querySelectorAll(".card").forEach(c=>c.onclick=()=>{ cur = G.find(g=>g.id==c.dataset.id); render(); });
+  win.querySelectorAll("img.hero-logo").forEach(img=>img.onerror=()=>{ const h=document.createElement("h1"); h.className="t"; h.textContent=img.dataset.fallback; img.replaceWith(h); });
+  history.replaceState(null,"",`#${style}${mode==="light"?"-light":""}`);
+  requestAnimationFrame(()=>requestAnimationFrame(applyLens));
+}
+document.getElementById("styles").innerHTML = Object.entries(STYLES).map(([k,v])=>`<button data-s="${k}">${v.name}</button>`).join("");
+document.getElementById("styles").onclick = e => { const b=e.target.closest("button"); if(b){ style=b.dataset.s; render(); } };
+document.getElementById("modes").onclick = e => { const b=e.target.closest("button"); if(b){ mode=b.dataset.m; render(); } };
+let rz; addEventListener("resize",()=>{ clearTimeout(rz); rz=setTimeout(applyLens,200); });
+
+const h = location.hash.slice(1); if(/^s[123]/.test(h)){ style=h.slice(0,2); if(h.endsWith("light")) mode="light"; }
+render();
+</script>
+</body>
+</html>
