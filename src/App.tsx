@@ -40,6 +40,7 @@ const DEFAULT_INFO: AppInfo = {
     gridSize: "medium",
     liquidGlass: true,
     quickShortcut: "ctrl+alt+space",
+    launchAtStartup: true,
   },
   translucent: false,
   country: "FR",

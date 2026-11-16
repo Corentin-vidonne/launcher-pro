@@ -148,6 +148,8 @@ pub struct Settings {
     pub liquid_glass: bool,
     /// Raccourci global de la recherche rapide (« ctrl+alt+space »…) ; vide = désactivé.
     pub quick_shortcut: String,
+    /// Lancer Launcher Pro (agrandi) à l'ouverture de session Windows.
+    pub launch_at_startup: bool,
 }
 
 impl Default for Settings {
@@ -160,6 +162,7 @@ impl Default for Settings {
             grid_size: "medium".into(),
             liquid_glass: true,
             quick_shortcut: "ctrl+alt+space".into(),
+            launch_at_startup: true,
         }
     }
 }

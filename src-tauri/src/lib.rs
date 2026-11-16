@@ -11,6 +11,7 @@ mod library;
 mod model;
 mod quick;
 mod shell;
+mod startup;
 mod state;
 mod storage;
 mod store;
@@ -56,6 +57,12 @@ fn set_low_memory(window: &tauri::Window, low: bool) {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        // Une seule instance : relancer l'app (raccourci, menu Démarrer) ramène la fenêtre existante.
+        .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| quick::show_main(app, None)))
+        .plugin(tauri_plugin_autostart::init(
+            tauri_plugin_autostart::MacosLauncher::LaunchAgent,
+            Some(vec![startup::AUTOSTART_ARG]),
+        ))
         .plugin(tauri_plugin_dialog::init())
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
@@ -81,6 +88,18 @@ pub fn run() {
             // Raccourci global de la recherche rapide. S'il est déjà pris par une autre application,
             // on se rabat sur un raccourci libre (et on le retient) ; sinon l'app démarre sans.
             let state = app.state::<AppState>();
+            // Démarrage avec Windows : la clé suit le réglage (et le chemin de l'exécutable actuel).
+            let launch_at_startup = state.prefs_read().settings.launch_at_startup;
+            if let Err(e) = startup::apply(app.handle(), launch_at_startup) {
+                eprintln!("{e}");
+            }
+            // Lancé par Windows à l'ouverture de session : fenêtre agrandie.
+            // Elle est encore masquée ; l'interface l'affiche une fois prête, comme d'habitude.
+            if std::env::args().any(|a| a == startup::AUTOSTART_ARG) {
+                if let Some(window) = app.get_webview_window("main") {
+                    let _ = window.maximize();
+                }
+            }
             let wanted = state.prefs_read().settings.quick_shortcut.clone();
             if !wanted.is_empty() && quick::apply_shortcut(app.handle(), &wanted).is_err() {
                 for fallback in quick::FALLBACKS.iter().filter(|f| **f != wanted) {

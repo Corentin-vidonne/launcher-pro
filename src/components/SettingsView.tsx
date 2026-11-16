@@ -114,6 +114,17 @@ export function SettingsView({ info, library, scanning, onChange, onRescan, onAd
         <div className="group">
           <div className="row">
             <div className="text">
+              <strong>Lancer au démarrage de Windows</strong>
+              <small>Launcher Pro s'ouvre agrandi à l'ouverture de session, prêt à jouer.</small>
+            </div>
+            <Toggle
+              on={settings.launchAtStartup}
+              label="Lancer au démarrage de Windows"
+              onChange={(launchAtStartup) => onChange({ launchAtStartup })}
+            />
+          </div>
+          <div className="row">
+            <div className="text">
               <strong>Après le lancement d'un jeu</strong>
               <small>
                 {settings.afterLaunch === "quit"

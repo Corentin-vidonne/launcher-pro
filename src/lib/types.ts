@@ -46,6 +46,8 @@ export interface Settings {
   liquidGlass: boolean;
   /** Raccourci global de la recherche rapide (« ctrl+alt+space »), vide = désactivé. */
   quickShortcut: string;
+  /** Lancer Launcher Pro (agrandi) à l'ouverture de session Windows. */
+  launchAtStartup: boolean;
 }
 
 export interface AppInfo {

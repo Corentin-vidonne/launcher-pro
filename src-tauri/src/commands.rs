@@ -11,7 +11,7 @@ use tauri::{AppHandle, State};
 
 use crate::model::{Collection, CustomGame, GameDto, LibraryDto, Settings};
 use crate::state::{self, AppState};
-use crate::{art, quick, shell, store, util, vault};
+use crate::{art, quick, shell, startup, store, util, vault};
 
 const STORE_TTL: Duration = Duration::from_secs(10 * 60);
 
@@ -189,13 +189,13 @@ pub struct AppInfo {
     /// Effet Mica disponible (Windows 11) : sinon l'interface utilise des fonds opaques.
     translucent: bool,
     country: String,
-    version: &'static str,
+    version: String,
     /// Le raccourci de recherche rapide fonctionne réellement (pas pris par une autre app).
     quick_shortcut_active: bool,
 }
 
 #[tauri::command]
-pub fn get_app_info(state: State<'_, AppState>) -> AppInfo {
+pub fn get_app_info(app: AppHandle, state: State<'_, AppState>) -> AppInfo {
     let build = util::hklm_string(r"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuildNumber")
         .and_then(|b| b.parse::<u32>().ok())
         .unwrap_or(0);
@@ -203,7 +203,7 @@ pub fn get_app_info(state: State<'_, AppState>) -> AppInfo {
         settings: state.prefs_read().settings.clone(),
         translucent: build >= 22000,
         country: state.region.country.clone(),
-        version: env!("CARGO_PKG_VERSION"),
+        version: app.package_info().version.to_string(),
         quick_shortcut_active: quick::is_active(),
     }
 }
@@ -217,6 +217,13 @@ pub fn set_settings(app: AppHandle, state: State<'_, AppState>, mut settings: Se
         if let Err(e) = quick::apply_shortcut(&app, &settings.quick_shortcut) {
             let _ = quick::apply_shortcut(&app, &previous);
             settings.quick_shortcut = previous;
+            outcome = Err(e);
+        }
+    }
+    // Démarrage avec Windows : la clé « Run » suit le réglage.
+    if settings.launch_at_startup != state.prefs_read().settings.launch_at_startup {
+        if let Err(e) = startup::apply(&app, settings.launch_at_startup) {
+            settings.launch_at_startup = !settings.launch_at_startup;
             outcome = Err(e);
         }
     }

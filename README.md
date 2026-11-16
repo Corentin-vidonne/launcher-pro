@@ -13,6 +13,9 @@ Steam, Epic, EA, Xbox, HoYoPlay, Battle.net et bien d'autres, détectés tout se
 ![React 19](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6?logo=typescript&logoColor=white)
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-green)](LICENSE)
+[![Installeur Windows](https://github.com/Corentin-vidonne/launcher-pro/actions/workflows/release.yml/badge.svg)](https://github.com/Corentin-vidonne/launcher-pro/actions/workflows/release.yml)
+
+[![Télécharger pour Windows](https://img.shields.io/github/v/release/Corentin-vidonne/launcher-pro?label=T%C3%A9l%C3%A9charger%20pour%20Windows&logo=windows&style=for-the-badge&color=0A84FF)](https://github.com/Corentin-vidonne/launcher-pro/releases/latest)
 
 </div>
 
@@ -24,14 +27,28 @@ L'application est écrite en Rust (Tauri 2) avec une interface React affichée p
 
 ---
 
+## Installation
+
+1. Téléchargez **`Launcher Pro_x.y.z_x64-setup.exe`** (environ 3 Mo) depuis la [dernière release](https://github.com/Corentin-vidonne/launcher-pro/releases/latest).
+2. Lancez-le : l'installation se fait pour votre compte Windows, sans droits administrateur.
+3. L'installeur n'est pas signé numériquement : si Windows SmartScreen affiche « Windows a protégé votre ordinateur », cliquez sur **Informations complémentaires**, puis **Exécuter quand même**.
+
+Launcher Pro démarre ensuite **avec Windows**, en fenêtre agrandie. Ce comportement se désactive dans **Réglages → Lancer au démarrage de Windows**. Rouvrir l'application depuis le menu Démarrer ou le bureau ramène simplement la fenêtre déjà ouverte.
+
+Pour mettre à jour, installez la nouvelle version par-dessus l'ancienne. Pour désinstaller : **Paramètres Windows → Applications → Launcher Pro**. Vos réglages, collections et jaquettes personnalisées sont conservés par défaut.
+
+---
+
 ## Sommaire
 
+- [Installation](#installation)
 - [Fonctionnalités](#fonctionnalités)
 - [Launchers pris en charge](#launchers-pris-en-charge)
 - [Performances](#performances)
 - [Confidentialité](#confidentialité)
 - [Compiler et lancer](#compiler-et-lancer)
 - [Développement](#développement)
+- [Publier une version](#publier-une-version)
 - [Architecture](#architecture)
 - [Limites connues](#limites-connues)
 - [Feuille de route](#feuille-de-route)
@@ -168,7 +185,7 @@ Pour ne plus rien consommer pendant une partie, choisissez **Réglages › Aprè
 
 ## Compiler et lancer
 
-Aucun installeur n'est encore publié : Launcher Pro se compile depuis les sources.
+Pour utiliser Launcher Pro, l'[installeur](#installation) suffit. Pour le compiler depuis les sources :
 
 **Prérequis**
 
@@ -195,7 +212,7 @@ npm run tauri dev
 npx tauri build --no-bundle
 ```
 
-`npx tauri build` (sans `--no-bundle`) produit en plus un installeur NSIS. Cette étape n'a pas encore été testée.
+`npx tauri build` (sans `--no-bundle`) produit en plus l'installeur : `src-tauri/target/release/bundle/nsis/Launcher Pro_<version>_x64-setup.exe`.
 
 ---
 
@@ -210,6 +227,19 @@ npx tauri build --no-bundle
 
 ---
 
+## Publier une version
+
+Le workflow [`release.yml`](.github/workflows/release.yml) construit l'installeur sur GitHub Actions à chaque push sur `main`, après les tests. Il reste téléchargeable dans les artefacts du run.
+
+Pour publier une nouvelle version :
+
+1. augmentez `version` dans [`package.json`](package.json), la seule source de la version (l'application et l'installeur la lisent) ;
+2. poussez sur `main`.
+
+La CI crée alors la release `vX.Y.Z` avec l'installeur, qui apparaît dans **Releases** sur la page du dépôt. Un push qui ne change pas la version reconstruit l'installeur sans rien republier.
+
+---
+
 ## Architecture
 
 ```
@@ -221,6 +251,7 @@ src-tauri/src/
 ├── storage.rs        Vue Stockage : espace des disques, taille des dossiers
 ├── vault.rs          Mot de passe des jeux masqués (Argon2id)
 ├── shell.rs          Lancement des jeux (ShellExecute), extraction des icônes
+├── startup.rs        Démarrage avec Windows (clé « Run » de l'utilisateur)
 ├── state.rs          État partagé, persistance
 └── commands.rs       Commandes appelées par l'interface
 
@@ -230,9 +261,10 @@ src/
 └── lib/              API, types, effet de verre (lens.ts), données de démonstration
 
 design/               Maquettes des trois directions visuelles explorées
+.github/workflows/    CI : construction de l'installeur et publication des releases
 ```
 
-**Technologies** : [Tauri 2](https://tauri.app/), Rust, React 19, TypeScript, Vite. Côté Rust : `reqwest` (TLS natif de Windows), `windows-rs`, `winreg`, `argon2`, `tauri-plugin-global-shortcut`.
+**Technologies** : [Tauri 2](https://tauri.app/), Rust, React 19, TypeScript, Vite. Côté Rust : `reqwest` (TLS natif de Windows), `windows-rs`, `winreg`, `argon2`, `tauri-plugin-global-shortcut`, `tauri-plugin-autostart`, `tauri-plugin-single-instance`. Installeur NSIS généré par Tauri.
 
 ---
 
@@ -242,13 +274,15 @@ design/               Maquettes des trois directions visuelles explorées
 - **Prix** : pas de prix automatiques pour Epic Games, EA, Ubisoft, Battle.net et Rockstar, qui ne les publient pas (la boutique Epic bloque les requêtes qui ne viennent pas d'un navigateur).
 - **Temps de jeu** : seul Steam le fournit pour l'instant.
 - **Mode TV** : pas encore testé avec une vraie manette.
-- **Installeur** : pas encore d'installeur testé ni de mise à jour automatique.
+- **Installeur non signé** : Windows SmartScreen affiche un avertissement au premier lancement de l'installeur.
+- **Mises à jour** : pas encore automatiques ; installez la nouvelle version par-dessus l'ancienne.
 
 ---
 
 ## Feuille de route
 
-- [ ] Installeur, démarrage avec Windows et icône dans la zone de notification
+- [x] Installeur et démarrage avec Windows
+- [ ] Mise à jour automatique et icône dans la zone de notification
 - [ ] Temps de jeu suivi pour tous les launchers
 - [ ] Liste de souhaits et alertes de baisse de prix
 - [ ] Prix Epic, EA et Ubisoft via IsThereAnyDeal

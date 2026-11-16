@@ -91,7 +91,7 @@ const library: Library = {
 };
 
 const info: AppInfo = {
-  settings: { theme: "system", afterLaunch: "minimize", showTools: false, showAllStores: false, gridSize: "medium", liquidGlass: true, quickShortcut: "ctrl+alt+space" },
+  settings: { theme: "system", afterLaunch: "minimize", showTools: false, showAllStores: false, gridSize: "medium", liquidGlass: true, quickShortcut: "ctrl+alt+space", launchAtStartup: true },
   translucent: false,
   country: "FR",
   version: "0.1.0",
